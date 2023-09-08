@@ -1,5 +1,6 @@
 package bluecode.tech.challenge.repositories;
 
+import bluecode.tech.challenge.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

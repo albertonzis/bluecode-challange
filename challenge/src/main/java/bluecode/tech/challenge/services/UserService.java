@@ -1,6 +1,12 @@
 package bluecode.tech.challenge.services;
 
+import bluecode.tech.challenge.exceptions.NotFoundException;
+import bluecode.tech.challenge.models.User;
+import bluecode.tech.challenge.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -13,12 +19,19 @@ public class UserService {
     }
 
     public Long createUser(User user) {
-       User user = userRepository.save(user);
-       return user.getId();
+        if (Objects.isNull(user.getAge()) || user.getAge() < 0 )
+            throw new RuntimeException();
+
+        User newUser = userRepository.save(user);
+        return newUser.getId();
     }
 
     public User getUser(Long id) {
-        return userRepository.findById(id);
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent())
+            return userOptional.get();
+        else
+            throw new NotFoundException();
     }
 
     public User updateUser(Long id, User user) {
@@ -30,6 +43,6 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        userRepository.delete(id);
+        userRepository.delete(getUser(id));
     }
 }
