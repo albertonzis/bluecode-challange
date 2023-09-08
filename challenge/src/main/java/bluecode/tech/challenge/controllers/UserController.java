@@ -1,5 +1,6 @@
 package bluecode.tech.challenge.controllers;
 
+import bluecode.tech.challenge.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UserController {
 
     @PostMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody User user) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(id, user));
     }
 
     @DeleteMapping("/{id}")
